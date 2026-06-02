@@ -5,6 +5,8 @@ const loadCategory=()=>{
     .then(res=>res.json())
     .then(data => displayCategory(data.categories))
 }
+const cart = []
+const total = 0
 
 const loadTrees = (id) => {
     document.getElementById('tree-container').classList.add('hidden')
@@ -83,14 +85,14 @@ const displayTrees = (plants) => {
       alt="" />
   </figure>
   <div class="card-body px-0">
-    <h2 onclick="loadTreeDetails(${plant.id})" class="card-title">${plant.name}</h2>
+    <h2 onclick="loadTreeDetails(${plant.id})" class="card-title plant-name">${plant.name}</h2>
     <p class="text-gray-600">${plant.description}</p>
     <div class="flex justify-between items-center">
         <span class="bg-green-100 text-green-700 px-5 py-2 rounded-full">${plant.category}</span>
-        <span>৳${plant.price}</span>
+        <span >৳<span class="plant-price">${plant.price}</span></span>
     </div>
     <div class="card-actions ">
-      <button  class="btn bg-green-700 text-white rounded-full text-lg  py-4  w-full">Add to Cart</button>
+      <button onclick="addToCart(this)" class="btn bg-green-700 text-white rounded-full text-lg  py-4  w-full ">Add to Cart</button>
     </div>
   </div>
 </div>`
@@ -130,3 +132,43 @@ const displayDetails = (plant) => {
 
 loadCategory()
 loadAllData()
+
+const addToCart = (btn) => {
+   const card = btn.parentNode.parentNode
+  const plantName = card.querySelector('.plant-name').innerText
+  const plantPrice = card.querySelector('.plant-price').innerText
+  const plantPriceNum = Number(plantPrice)
+  const selectedItem = {
+    plantName: plantName,
+    plantPrice: plantPriceNum,
+  }
+  cart.push(selectedItem)
+  console.log(cart)
+  displayCart(cart)
+}
+
+const displayCart = (cart) => {
+    const cartContainer = document.getElementById('cart-container')
+    cartContainer.innerHTML = ""
+
+    for(let item of cart){
+        
+        const newItem = document.createElement('div')
+            newItem.innerHTML= `
+            <div class="bg-green-50 p-2 rounded-lg">
+             <div class="flex justify-between items-center" >
+                <div>
+                    <h2 class="font-semibold text-lg">${item.plantName}</h2>
+                    <p>৳<span>${item.plantPrice}</span></p>
+                </div>
+                <div><i class="fa-solid fa-xmark"></i></div>
+
+             </div>
+         </div>
+            `
+            cartContainer.append(newItem)
+        
+    }
+
+
+}
