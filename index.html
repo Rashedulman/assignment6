@@ -57,19 +57,19 @@
 
         <!-- choose your trees section -->
 <h2 class="text-2xl font-semibold text-center mt-15">Choose Your Trees</h2>
-        <section class="grid grid-cols-12 gap-5 mt-10 w-11/12 mx-auto min-h-screen py-4">
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-5 mt-10 w-11/12 mx-auto min-h-screen py-4">
             
-            <section class="col-span-2 rounded-xl p-3">
+            <section class="md:col-span-2 rounded-xl p-3">
              <h1 class="text-xl font-bold  bg-white rounded-2xl mb-2">
           Cateogries
              </h1>
         <!-- categories  -->
-             <div class="grid grid-cols-1 sticky top-0 gap-3" id="category-container"></div>
+             <div class="grid grid-cols-2 md:grid-cols-1  gap-3" id="category-container"></div>
             </section>
      
 
 
-            <section class="col-span-8 p-3">
+            <section class="md:col-span-8 p-3">
 
             <div id="loading-spinner"
              class="min-h-[60vh] flex flex-col justify-center items-center hidden">
@@ -86,7 +86,7 @@
 
 
              <section
-        class="col-span-2 p-3 bg-white rounded-xl"
+        class="md:col-span-2 p-3 bg-white rounded-xl md:sticky md:top-4 h-fit"
       >
         <h1 class="text-xl font-bold  rounded-2xl">Your Cart</h1>
         <div class="grid grid-cols-1 gap-1" id="cart-container">

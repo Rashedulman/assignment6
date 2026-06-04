@@ -5,8 +5,8 @@ const loadCategory=()=>{
     .then(res=>res.json())
     .then(data => displayCategory(data.categories))
 }
-const cart = []
-const total = 0
+let cart = []
+let total = 0
 
 const loadTrees = (id) => {
     document.getElementById('tree-container').classList.add('hidden')
@@ -30,17 +30,6 @@ const displayCategory=(categories)=>{
     const categoryContainer = document.getElementById('category-container')
     categoryContainer.innerHTML = ""
 
-// default All Trees button
-// const allBtn = document.createElement('div')
-
-// allBtn.innerHTML = `
-// <button onclick="loadAllData()"
-// class="btn btn-block justify-start bg-green-700 text-white">
-// All Trees
-// </button>
-// `
-
-// categoryContainer.append(allBtn)
 
 
     for(let category of categories){
@@ -138,13 +127,32 @@ const addToCart = (btn) => {
   const plantName = card.querySelector('.plant-name').innerText
   const plantPrice = card.querySelector('.plant-price').innerText
   const plantPriceNum = Number(plantPrice)
-  const selectedItem = {
+  const isExist = cart.find(item=> item.plantName == plantName)
+  if(isExist){
+    for(let i=0; i<cart.length; i++){
+        if(cart[i].plantName == plantName){
+            cart[i].quantity++
+            break
+        }
+    }
+  }else{
+    const selectedItem = {
+    id: cart.length + 1,
+    quantity: 1,
     plantName: plantName,
     plantPrice: plantPriceNum,
   }
   cart.push(selectedItem)
-  console.log(cart)
+  }
+  
+  
+  total = total + plantPriceNum
   displayCart(cart)
+  displayTotal(total)
+}
+
+const displayTotal = (val) => {
+    document.getElementById('cart-total').innerHTML = val
 }
 
 const displayCart = (cart) => {
@@ -158,10 +166,15 @@ const displayCart = (cart) => {
             <div class="bg-green-50 p-2 rounded-lg">
              <div class="flex justify-between items-center" >
                 <div>
-                    <h2 class="font-semibold text-lg">${item.plantName}</h2>
-                    <p>৳<span>${item.plantPrice}</span></p>
+                    <span class="hidden cart-id">${item.id}</span>
+                    <h2 class="font-semibold text-lg plant-name">${item.plantName}</h2>
+                    <p>৳<span class="plant-price">${item.plantPrice}</span>
+                    <i class="fa-solid fa-xmark text-xs mx-1"></i>
+                    <span>${item.quantity}</span>
+                    </p>
                 </div>
-                <div><i class="fa-solid fa-xmark"></i></div>
+                <div onclick="removeCart(this)"
+                ><i class="fa-solid fa-xmark"></i></div>
 
              </div>
          </div>
@@ -169,6 +182,15 @@ const displayCart = (cart) => {
             cartContainer.append(newItem)
         
     }
+}
 
-
+const removeCart = (btn) => {
+   const item = btn.parentNode
+   const id = Number(item.querySelector(".cart-id").innerText)
+   const plantPrice = Number(item.querySelector('.plant-price').innerText)
+   cart = cart.filter(item => item.id !== id)
+   total =0 
+   cart.forEach(item=> total += item.plantPrice * item.quantity )
+   displayCart(cart)
+   displayTotal(total)
 }
