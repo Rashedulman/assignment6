@@ -75,7 +75,7 @@ const displayTrees = (plants) => {
   </figure>
   <div class="card-body px-0">
     <h2 onclick="loadTreeDetails(${plant.id})" class="card-title plant-name">${plant.name}</h2>
-    <p class="text-gray-600">${plant.description}</p>
+    <p class="text-gray-600 h-20 overflow-hidden">${plant.description}</p>
     <div class="flex justify-between items-center">
         <span class="bg-green-100 text-green-700 px-5 py-2 rounded-full">${plant.category}</span>
         <span >৳<span class="plant-price">${plant.price}</span></span>
@@ -96,11 +96,11 @@ treeContainer.append(treeCard)
 const displayDetails = (plant) => {
     const detailsContainer = document.getElementById('details-container')
     detailsContainer.innerHTML = `
-     <div class="card bg-white shadow-md p-8 rounded-3xl">
-    <h2  class="card-title text-4xl font-semibold mb-4">${plant.name}</h2>
+     <div class="card bg-white shadow-md p-6 rounded-3xl">
+    <h2  class="card-title text-3xl font-semibold mb-4">${plant.name}</h2>
   <figure>
     <img
-      class="w-full h-72 object-cover rounded-xl"
+      class="w-full h-64 object-cover rounded-xl"
       src="${plant.image}"
     />
   </figure>
